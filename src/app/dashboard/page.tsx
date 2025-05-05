@@ -1,198 +1,149 @@
-// 'use client';
+'use client';
 
-// import { useEffect, useState } from 'react';
-// import { getUsers } from '../lib/supabase';
+import { useEffect, useState } from "react";
+// import DashboardHeader from "../components/DashBoardComponents/DashboardHeader"; // Commented out DashboardHeader import
+import DashboardCards from "../components/DashBoardComponents/DashboardCards";
+import ChartOrder from "../components/Chart";
+//import RevenueGraph from "../components/RevenueGraph";  // Commented out RevenueGraph import
+import { supabase } from "@/lib/supabaseClient";
+import { useReadAllOrderStatuses } from "../api/DashboardRelatedApi/Dashboard";
 
-// export default function Dashboard() {
-//   const [users, setUsers] = useState<any[]>([]);
+// Define inline styles for zero spacing
+const noSpacingStyle = {
+  marginTop: 0,
+  paddingTop: 0,
+};
 
-//   useEffect(() => {
-//     const fetchUsers = async () => {
-//       const usersData = await getUsers();
-//       setUsers(usersData || []);
-//     };
+// Custom CSS for overriding any framework styles
+const customStyles = `
+  /* Ensure no space at the top of dashboard components */
+  .dashboard-container,
+  .dashboard-header,
+  .dashboard-header h1,
+  .dashboard-cards-container,
+  .dashboard-main {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
 
-//     fetchUsers();
-//   }, []);
+  /* Target parent containers */
+  .layout-wrapper > div,
+  .content-area > div:first-child,
+  .min-h-screen > div:first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
 
-//   return (
-//     <div className="p-6">
-//       <h1 className="text-2xl font-bold">Supabase Users</h1>
-//       <ul className="mt-4">
-//         {users.length > 0 ? (
-//           users.map((user) => (
-//             <ul key={user.riderid}>
-//             <li className="border-b py-2">
-//               {user.name}
-//             </li>
-//             <li>{user.phone}</li>
-//             </ul>
-//           ))
-//         ) : (
-//           <p>No users found.</p>
-//         )}
-//       </ul>
-//     </div>
-//   );
-// }
+  /* Remove spacing from any potential container */
+  .p-6 {
+    padding-top: 0 !important;
+  }
+`;
 
-
-// "use client";
-
-// import { useEffect, useState } from "react";
-// import { useRouter } from "next/navigation";
-// import { supabase } from "../lib/supabaseClient";
-// import { logoutAdmin } from "../lib/auth";
-
-// export default function DashboardPage() {
-//   const [user, setUser] = useState<any>(null);
-//   const router = useRouter();
-
-//   useEffect(() => {
-//     const checkUser = async () => {
-//       const { data } = await supabase.auth.getUser();
-//       if (!data.user) router.push("/auth/login");
-//       setUser(data.user);
-//     };
-//     checkUser();
-//   }, [router]);
-//   const logoutAdminHere = async () => {
-//     await logoutAdmin();
-//     router.push('/auth/login')
-//   }
-
-//   return (
-//     <div className="p-6">
-//       <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-//       {user && <p>Welcome, {user.email}</p>}
-//       <button
-//         onClick={logoutAdminHere}
-//         className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg"
-//       >
-//         Logout
-//       </button>
-//     </div>
-//   );
-// }
-
-
-
-
-// "use client";
-
- //import Sidebar from "././components/Sidebar";
-// import Navbar from "../components/NavBar";
-// import Chart from "../components/Chart";
-// import RevenueGraph from "../components/RevenueGraph";
-// import SearchBar from "../components/SearchBar";
-
-// export default function DashboardPage() {
-//   return (
-//     <div className="flex">
-//       {/* <Sidebar /> */}
-//       <div className="flex-1 p-6">
-//         <SearchBar />
-//         <h1 className="text-2xl font-bold my-4">Dashboard</h1>
-
-//         <div className="grid grid-cols-3 gap-6">
-//           <div className="p-6 bg-white rounded shadow">
-//             <h2 className="text-xl font-bold">75</h2>
-//             <p>Total Orders</p>
-//           </div>
-//           <div className="p-6 bg-white rounded shadow">
-//             <h2 className="text-xl font-bold">357</h2>
-//             <p>Total Delivered</p>
-//           </div>
-//           <div className="p-6 bg-white rounded shadow">
-//             <h2 className="text-xl font-bold">65</h2>
-//             <p>Total Canceled</p>
-//           </div>
-//         </div>
-
-//         <div className="mt-6">
-//           <Chart />
-//         </div>
-
-//         <div className="mt-6">
-//           <RevenueGraph />
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-
-
-// "use client";
-
-// import Chart from "../components/Chart";
-// import RevenueGraph from "../components/RevenueGraph";
-
-// export default function DashboardPage() {
-//   return (
-//     <div>
-//       <h1 className="text-2xl font-bold my-4">Dashboard</h1>
-
-//       <div className="grid grid-cols-3 gap-6">
-//         <div className="p-6 bg-white rounded shadow">
-//           <h2 className="text-xl font-bold">75</h2>
-//           <p>Total Orders</p>
-//         </div>
-//         <div className="p-6 bg-white rounded shadow">
-//           <h2 className="text-xl font-bold">357</h2>
-//           <p>Total Delivered</p>
-//         </div>
-//         <div className="p-6 bg-white rounded shadow">
-//           <h2 className="text-xl font-bold">65</h2>
-//           <p>Total Canceled</p>
-//         </div>
-//       </div>
-
-//       <div className="mt-6">
-//         <Chart />
-//       </div>
-
-//       <div className="mt-6">
-//         <RevenueGraph />
-//       </div>
-//     </div>
-//   );
-// }
-
-import dynamic from "next/dynamic";
-import Layout from "../components/Layout";
-import RevenueGraph from "../components/RevenueGraph"; // ✅ No need for `dynamic`
-import Chart from "../components/Chart"; // ✅ No need for `dynamic`
-
-
+const DefaultLayout = ({ children }: { children: React.ReactNode }) => (
+  <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+    {children}
+  </div>
+);
 
 export default function DashboardPage() {
+  const { data: orderStatusData, isLoading, isError, error } = useReadAllOrderStatuses();
+
+  // Try to import Layout, fallback to DefaultLayout if not found
+  let Layout;
+  try {
+    Layout = require("../components/Layout").default;
+  } catch {
+    Layout = DefaultLayout;
+  }
+
+  useEffect(() => {
+    // Inject custom CSS to override any framework styles
+    const styleElement = document.createElement("style");
+    styleElement.textContent = customStyles;
+    document.head.appendChild(styleElement);
+
+    // Direct DOM manipulation to remove spacing
+    setTimeout(() => {
+      // Fix any dashboard header spacing
+      const dashboardHeader = document.querySelector("h1");
+      if (dashboardHeader) {
+        dashboardHeader.style.marginTop = "0";
+        dashboardHeader.style.paddingTop = "0";
+
+        // Also fix parent elements
+        let parent = dashboardHeader.parentElement;
+        while (parent && parent !== document.body) {
+          parent.style.marginTop = "0";
+          parent.style.paddingTop = "0";
+          parent = parent.parentElement;
+        }
+      }
+
+      // Target the main container and its parents
+      const mainContainer = document.querySelector(".dashboard-main");
+      if (mainContainer) {
+        let parent = mainContainer.parentElement;
+        while (parent && parent !== document.body) {
+          parent.style.marginTop = "0";
+          parent.style.paddingTop = "0";
+          parent = parent.parentElement;
+        }
+      }
+    }, 0);
+
+    return () => {
+      // Clean up the injected style on component unmount
+      document.head.removeChild(styleElement);
+    };
+  }, []);
+
+  if (isError) {
+    return <div className="flex items-center justify-center h-screen">Error: {error?.message}</div>;
+  }
+
   return (
     <Layout>
-      <h1 className="text-2xl font-bold my-4">Dashboard</h1>
-
-      <div className="grid grid-cols-3 gap-6">
-        <div className="p-6 bg-white rounded shadow">
-          <h2 className="text-xl font-bold">75</h2>
-          <p>Total Orders</p>
+      {isLoading ? (
+        <div className="flex items-center justify-center h-screen">
+          <div className="animate-pulse text-xl text-blue-600">Loading dashboard data...</div>
         </div>
-        <div className="p-6 bg-white rounded shadow">
-          <h2 className="text-xl font-bold">357</h2>
-          <p>Total Delivered</p>
-        </div>
-        <div className="p-6 bg-white rounded shadow">
-          <h2 className="text-xl font-bold">65</h2>
-          <p>Total Canceled</p>
-        </div>
-      </div>
+      ) : (
+        <div className="dashboard-main p-0 m-0 max-w-7xl mx-auto" style={noSpacingStyle}>
+          {/* Dashboard Header with zero spacing */}
+          {/* <div style={noSpacingStyle} className="p-0 m-0">
+            <ModifiedDashboardHeader />
+          </div> */}
 
-      <div className="mt-6">
-        <Chart />
-      </div>
+          {/* Dashboard Cards with increased size */}
+          <div className="flex flex-col gap-6 p-0 m-0" style={noSpacingStyle}>
+            <div
+              className="dashboard-cards-container bg-white p-12 rounded-2xl shadow-xl border border-gray-100"  // Increased padding here
+              style={noSpacingStyle}
+            >
+              <DashboardCards data={orderStatusData} />
+            </div>
+          </div>
 
-      <div className="mt-6">
-        <RevenueGraph />
-      </div>
+          {/* Charts with proper spacing */}
+          <div className="mt-8 px-6">
+            <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 mb-12">
+              <h2 className="text-xl font-semibold text-gray-800 mb-6">Order Analytics</h2>
+              <div className="h-[450px]">
+                <ChartOrder />
+              </div>
+            </div>
+
+            {/* Commented out the RevenueGraph component */}
+            {/* <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+              <h2 className="text-xl font-semibold text-gray-800 mb-6">Revenue Trends</h2>
+              <div className="h-[450px]">
+                <RevenueGraph />
+              </div>
+            </div> */}
+          </div>
+        </div>
+      )}
     </Layout>
   );
 }

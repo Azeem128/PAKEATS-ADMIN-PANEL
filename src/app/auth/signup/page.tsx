@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signupAdmin } from "../../lib/auth";
+import { signupAdmin } from "../../../lib/auth";
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");

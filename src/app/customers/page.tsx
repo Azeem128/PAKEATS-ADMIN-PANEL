@@ -1,17 +1,18 @@
-
 'use client';
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
-import RevenueGraph from "../components/RevenueGraph";
-import Chart from "../components/Chart";
-import CustomerTable from "../components/CustomerTable";
+//import RevenueGraph from "../components/RevenueGraph"; // Commented out RevenueGraph import
+//import Chart from "../components/Chart"; // Commented out Chart import
+import CustomerTable from "../components/Customers/CustomerTable";
 
 export default function CustomersPage() {
+
   return (
     <Layout>
       <h1 className="text-2xl font-bold my-4">Customers</h1>
-      <div className="grid grid-cols-4 gap-6">
+      {/* Commented out the grid with other components */}
+      {/* <div className="grid grid-cols-4 gap-6">
         <div className="p-6 bg-white rounded shadow">
           <h2 className="text-xl font-bold">75</h2>
           <p>Total Active Customers</p>
@@ -32,7 +33,9 @@ export default function CustomersPage() {
       <div className="mt-6 grid grid-cols-2 gap-6">
         <Chart />
         <RevenueGraph />
-      </div>
+      </div> */}
+
+      {/* Only displaying the CustomerTable */}
       <div className="mt-6">
         <CustomerTable />
       </div>

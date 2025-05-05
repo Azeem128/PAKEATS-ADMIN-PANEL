@@ -1,72 +1,35 @@
-"use client";
 
-import { useEffect, useState } from "react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Legend } from 'recharts';
 
-const data = [
-  { name: "Jan", revenue: 12000 },
-  { name: "Feb", revenue: 15000 },
-  { name: "Mar", revenue: 18000 },
-  { name: "Apr", revenue: 14000 },
-  { name: "May", revenue: 20000 },
+const revenueData = [
+  { month: 'Jan', revenue: 24000 },
+  { month: 'Feb', revenue: 22000 },
+  { month: 'Mar', revenue: 25000 },
+  { month: 'Apr', revenue: 26000 },
+  { month: 'May', revenue: 24000 },
+  { month: 'Jun', revenue: 27000 },
+  { month: 'Jul', revenue: 28000 },
+  { month: 'Aug', revenue: 29000 },
+  { month: 'Sep', revenue: 32000 },
+  { month: 'Oct', revenue: 31000 },
+  { month: 'Nov', revenue: 33000 },
+  { month: 'Dec', revenue: 34000 },
 ];
 
-const data1 = [
-  { name: "Total Orders", value: 400, color: "#FF6384" },
-  { name: "Pending Orders", value: 300, color: "#36A2EB" },
-];
+const RevenueChart = () => (
+  <div className="bg-white p-4 rounded-xl shadow w-full max-w-lg">
+    <h2 className="font-semibold mb-2">Total Revenue</h2>
+    <ResponsiveContainer width="100%" height={300}>
+      <LineChart data={revenueData}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="month" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Line type="monotone" dataKey="revenue" stroke="#82ca9d" />
+      </LineChart>
+    </ResponsiveContainer>
+  </div>
+);
 
-const RevenueGraph = () => {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-  return (
-    <div className="flex-row items-center justify-center">
-      <div className="w-full h-[400px] p-6 bg-white rounded shadow">
-        <h2 className="text-lg font-bold">Total Revenue</h2>
-        {/* <LineChart width={300} height={300} data={data}>
-          <XAxis dataKey="name" />
-          <YAxis />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="revenue" stroke="#82ca9d" strokeWidth={2} />
-        </LineChart> */}
-         <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={data}>
-          <XAxis dataKey="name" />
-          <YAxis />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="revenue" stroke="#82ca9d" strokeWidth={2} />
-        </LineChart>
-      </ResponsiveContainer>
-      </div>
-
-      {/* <div className="p-6 bg-white rounded shadow">
-
-        <PieChart width={400} height={300}>
-          <Pie
-            data={data1}
-            cx={200}
-            cy={150}
-            innerRadius={60}
-            outerRadius={80}
-            fill="#8884d8"
-            dataKey="value"
-          >
-            {data1.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.color} />
-            ))}
-          </Pie>
-        </PieChart>
-      </div> */}
-
-    </div>
-  );
-};
-
-export default RevenueGraph;
+export default RevenueChart;

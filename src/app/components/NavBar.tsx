@@ -2,21 +2,23 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { FaUserCircle } from "react-icons/fa";
 
 const NavBar = () => {
   const pathname = usePathname();
 
   const routes = [
-    { name: "Home", path: "/" },
     { name: "Dashboard", path: "/dashboard" },
-    { name: "Profile", path: "/profile" },
   ];
 
   return (
-    <nav className="bg-gray-900 text-white shadow-md">
+    <nav className="bg-gray-900 text-white shadow-md fixed top-0 left-0 w-full z-50">
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold">MyApp</h1>
-        <div className="flex gap-6">
+        {/* Moved "Dashboard" text to the left and reduced font size */}
+        <h1 className="text-lg font-bold mr-auto">Admin Panel</h1>
+
+        <div className="flex gap-6 items-center">
+          {/* Routes */}
           {routes.map((route) => (
             <Link key={route.path} href={route.path}>
               <span
@@ -30,6 +32,14 @@ const NavBar = () => {
               </span>
             </Link>
           ))}
+
+          {/* Profile Icon */}
+          <Link href="/profile">
+            <div className="flex items-center space-x-2 cursor-pointer">
+              <FaUserCircle className="w-6 h-6 text-white" />
+              <span className="text-sm font-semibold">Profile</span>
+            </div>
+          </Link>
         </div>
       </div>
     </nav>
@@ -37,4 +47,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-

@@ -1,7 +1,10 @@
-"use client";
 
+import React from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, Legend } from "recharts";
+import Layout from "../components/Layout";
+//import CustomerMap from "../components/CustomerMap"; // Import CustomerMap
 
+// Dummy Data for Analytics
 const analyticsData = [
     { month: "Jan", orders: 120, revenue: 2400 },
     { month: "Feb", orders: 150, revenue: 2800 },
@@ -19,55 +22,111 @@ const pieData = [
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
 
-export default function AnalyticsPage() {
+// Trending and Favorite Items Data
+const trendingItems = [
+    { rank: 1, name: "Tuna Soup Spinach with Hummus", orders: 524 },
+    { rank: 2, name: "Chicken Curry Special", orders: 215 },
+    { rank: 3, name: "Italian Pizza Margherita", orders: 120 },
+    { rank: 4, name: "Watermelon Mrs Chocolate Juice with Cucumber", orders: 76 },
+    { rank: 5, name: "Chicken Curry Special with Cucumber", orders: 215 },
+];
+
+const favoriteItems = [
+    { name: "Porkin Spicy Pizza with Mango Leaf", orders: 90 },
+    { name: "Chicken Curry Specials with Cucumbers", orders: 75 },
+    { name: "Watermelon Mrs-Chocolate Juice with Cucumber", orders: 60 },
+    { name: "Italian Pizza Pizza with Mozarella", orders: 85 },
+    { name: "Burger Jumbo's Pizza with Tasty Beef Barbeque", orders: 50 },
+];
+
+// Analytics Page
+const AnalyticsPage = () => {
     return (
-        <div className="p-6">
-            <h1 className="text-2xl font-bold mb-4">📊 Analytics Overview</h1>
+        <Layout>
+            <div className="p-6">
+                <h1 className="text-2xl font-bold mb-4">📊 Analytics Overview</h1>
 
-            {/* Bar Chart - Orders & Revenue */}
-            <div className="bg-white p-4 rounded-xl shadow-md mb-6">
-                <h2 className="text-xl font-semibold mb-2">Orders & Revenue</h2>
-                <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={analyticsData}>
-                        <XAxis dataKey="month" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Bar dataKey="orders" fill="#82ca9d" name="Orders" />
-                        <Bar dataKey="revenue" fill="#8884d8" name="Revenue" />
-                    </BarChart>
-                </ResponsiveContainer>
-            </div>
+                {/* Layout for the Charts and Items */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 mb-6">
 
-            {/* Line Chart - Revenue Growth */}
-            <div className="bg-white p-4 rounded-xl shadow-md mb-6">
-                <h2 className="text-xl font-semibold mb-2">Revenue Growth</h2>
-                <ResponsiveContainer width="100%" height={300}>
-                    <LineChart data={analyticsData}>
-                        <XAxis dataKey="month" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Line type="monotone" dataKey="revenue" stroke="#ff7300" name="Revenue Growth" />
-                    </LineChart>
-                </ResponsiveContainer>
-            </div>
+                    {/* Customer Map */}
+                    <div className="bg-white p-4 rounded-xl shadow-md">
+                        <h3 className="text-xl font-semibold mb-4">Customer Map</h3>
+                        <CustomerMap />
+                    </div>
 
-            {/* Pie Chart - Customer Distribution */}
-            <div className="bg-white p-4 rounded-xl shadow-md">
-                <h2 className="text-xl font-semibold mb-2">Customer Distribution</h2>
-                <ResponsiveContainer width="100%" height={300}>
-                    <PieChart>
-                        <Pie data={pieData} cx="50%" cy="50%" outerRadius={100} fill="#8884d8" dataKey="value">
-                            {pieData.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                            ))}
-                        </Pie>
-                        <Tooltip />
-                        <Legend />
-                    </PieChart>
-                </ResponsiveContainer>
+                    {/* Orders & Revenue Chart */}
+                    <div className="bg-white p-4 rounded-xl shadow-md">
+                        <h3 className="text-xl font-semibold mb-4">Orders & Revenue</h3>
+                        <ResponsiveContainer width="100%" height={300}>
+                            <BarChart data={analyticsData}>
+                                <XAxis dataKey="month" />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Bar dataKey="orders" fill="#82ca9d" name="Orders" />
+                                <Bar dataKey="revenue" fill="#8884d8" name="Revenue" />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
+                </div>
+
+                {/* Revenue Growth Chart */}
+                <div className="bg-white p-4 rounded-xl shadow-md mb-6">
+                    <h3 className="text-xl font-semibold mb-4">Revenue Growth</h3>
+                    <ResponsiveContainer width="100%" height={300}>
+                        <LineChart data={analyticsData}>
+                            <XAxis dataKey="month" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Line type="monotone" dataKey="revenue" stroke="#ff7300" name="Revenue Growth" />
+                        </LineChart>
+                    </ResponsiveContainer>
+                </div>
+
+                {/* Customer Distribution Pie Chart */}
+                <div className="bg-white p-4 rounded-xl shadow-md mb-6">
+                    <h3 className="text-xl font-semibold mb-4">Customer Distribution</h3>
+                    <ResponsiveContainer width="100%" height={300}>
+                        <PieChart>
+                            <Pie data={pieData} cx="50%" cy="50%" outerRadius={100} fill="#8884d8" dataKey="value">
+                                {pieData.map((entry, index) => (
+                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                ))}
+                            </Pie>
+                            <Tooltip />
+                            <Legend />
+                        </PieChart>
+                    </ResponsiveContainer>
+                </div>
+
+                {/* Trending Items Section */}
+                <div className="bg-white p-4 rounded-xl shadow-md mb-6">
+                    <h3 className="text-xl font-semibold mb-4">Trending Items</h3>
+                    {trendingItems.map((item, index) => (
+                        <div key={index} className="flex justify-between mb-3">
+                            <span className="font-medium">
+                                #{item.rank} {item.name}
+                            </span>
+                            <span className="font-light text-gray-600">{item.orders} orders</span>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Most Favourite Items Section */}
+                <div className="bg-white p-4 rounded-xl shadow-md mb-6">
+                    <h3 className="text-xl font-semibold mb-4">Most Favourite Items</h3>
+                    {favoriteItems.map((item, index) => (
+                        <div key={index} className="flex justify-between mb-3">
+                            <span className="font-medium">{item.name}</span>
+                            <span className="font-light text-gray-600">{item.orders} orders</span>
+                        </div>
+                    ))}
+                </div>
             </div>
-        </div>
+        </Layout>
     );
-}
+};
+
+export default AnalyticsPage;
